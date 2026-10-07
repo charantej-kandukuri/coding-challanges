@@ -1,13 +1,30 @@
-// Find the missing number
-const arr = [3, 1, 4, 5];
+function findSquareRootWithPrecision(num, precision = 0.000001) {
+  if (num < 0) {
+    throw new Error("Number cant be negative.");
+  }
 
-function missingNum(arr) {
-  arr.sort();
-  for (let i = 0; i < arr.length - 1; i++) {
-    if (arr[i + 1] - arr[i] > 1) {
-      return arr[i] + 1;
+  if (num <= 1) return num;
+
+  let left = 0, right = num;
+
+  if (num < 1) right = 1;
+
+  while (right - left > precision) {
+    let mid = (left + right) / 2;
+
+    //! don't add the commented line
+    // if (mid * mid) return mid;
+
+    if (mid * mid < num) {
+      left = mid;
+    } else {
+      right = mid;
     }
   }
+
+  return +((left + right) / 2).toFixed(2); // can use Math.round
 }
 
-console.log(missingNum(arr));
+const result = findSquareRootWithPrecision(20)
+console.info({ result })
+module.exports = findSquareRootWithPrecision;

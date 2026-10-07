@@ -1,26 +1,38 @@
-// Find the max chars remove special chars
-function maxChars(str) {
-  return [...str.replace(/[^\w]/g, "")].reduce((acc, curr) => {
-    acc[curr] = (acc[curr] ?? 0) + 1;
-    return acc;
-  }, {});
+let str = "banana";
+let output = [];
+
+
+// Simple Solution
+let str = "banana";
+let output = [];
+
+function maxChar(str) {
+
+  let obj = {};
+
+  [...str].map(item => {
+    obj[item] = (obj[item] ?? 0) + 1;
+  })
+  
+  return Object.entries(obj).map(([k, v]) => {
+    return { [k]: v };
+  });
 }
 
-module.exports = maxChars;
+console.log(maxChar(str)); // [{b: 1}, {a: 3}, {n: 2}]
 
-/**
- * HCL Hacathon question
- * 
- * function maxChars2(str) {
+
+// Robust solution
+function maxChar(str) {
   return Object.entries(
-    [...str.replace(/[^\w]/g, "")].reduce((acc, curr) => {
+    [...str].reduce((acc, curr) => {
       acc[curr] = (acc[curr] ?? 0) + 1;
       return acc;
-    }, {}),
-  ).map(([key, value]) => ({ [key]: value }));
-}  // --> output: [{h: 1}, {l: 3}, ...];
-
-function removeSpecialChars(str) {
-  return str.replace(/[^\w]/g, "");
+    }, {})
+  )
+  .map(([k, v]) => {
+    return { [k]: v };
+  });
 }
- */
+
+console.log(maxChar(str)); // [{b: 1}, {a: 3}, {n: 2}]
